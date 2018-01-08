@@ -10,7 +10,7 @@ import java.util.Properties;
 public class ConfigurationParser {
 
 
-    public static void parse(Properties properties) {
+    public  void parse(Properties properties) {
 
     }
 }
