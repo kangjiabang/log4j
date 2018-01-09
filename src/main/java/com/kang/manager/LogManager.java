@@ -1,6 +1,11 @@
 package com.kang.manager;
 
+import com.kang.helpers.ConfigurationParser;
 import com.kang.loader.Loader;
+import com.kang.log4j.core.Hierarchy;
+import com.kang.log4j.core.Level;
+import com.kang.log4j.core.Logger;
+import com.kang.log4j.core.RootLogger;
 import com.sun.tools.javac.util.Assert;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,8 +22,9 @@ import java.util.Properties;
 public class LogManager {
 
     private static final String DEFAULT_CONFIG_FILE_NAME = "log4j.properties";
-    static {
 
+    static {
+        Hierarchy h = new Hierarchy(new RootLogger(Level.DEBUG));
         ClassLoader loader = Loader.getClassLoader();
 
         URL url = loader.getResource(DEFAULT_CONFIG_FILE_NAME);
@@ -31,6 +37,7 @@ public class LogManager {
         } catch (IOException e) {
             log.error("load log4j.properties failed",e);
         }
+        new ConfigurationParser(h).parse(properties);
 
 
     }
