@@ -10,7 +10,7 @@ import java.util.Map;
  * @Date: Created in 21:28 9/1/18.
  * @Description:
  */
-public class Hierarchy {
+public class Hierarchy implements LogRepository {
 
     private Logger  root;
 
@@ -28,5 +28,17 @@ public class Hierarchy {
 
     public void setRoot(Logger root) {
         this.root = root;
+    }
+
+    @Override
+    public Logger getLogger(String name) {
+
+        synchronized (loggerHashMap) {
+            Logger logger = loggerHashMap.get(name);
+            if (logger == null) {
+                return root;
+            }
+        }
+        return null;
     }
 }

@@ -7,7 +7,7 @@ import sun.reflect.Reflection;
  * @Date: Created in 21:15 8/1/18.
  * @Description:
  */
-public class Loader {
+public class LoaderFactory {
 
     /**
      * 获取加载器

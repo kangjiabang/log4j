@@ -9,22 +9,30 @@ import com.kang.appender.AppenderAttachableImpl;
  * @Date: Created in 21:13 8/1/18.
  * @Description:
  */
-public class Category implements AppenderAttachable {
+public class Category {
 
 
     private String name;
 
     private volatile  Level level;
 
+    protected Category parent;
+
     private AppenderAttachable aai = null;
+
+    private String categoryName = Category.class.getName();
 
 
     public Category(String name) {
         this.name = name;
     }
     public void info(String message) {
-
+        //TO Replace this.level
+        if (Level.INFO.isGreaterOrEquals(this.level)) {
+            forceLog(new LoggEvent(message,categoryName));
+        }
     }
+
 
     public void debug(String message) {
 
@@ -46,7 +54,7 @@ public class Category implements AppenderAttachable {
         this.level = level;
     }
 
-    @Override
+
     public void addAppender(Appender appender) {
         synchronized (this) {
             if (aai == null) {
@@ -57,13 +65,23 @@ public class Category implements AppenderAttachable {
 
     }
 
-    @Override
     public void removeAppender(Appender appender) {
 
     }
 
-    @Override
+
     public Appender getAppender(String name) {
         return null;
+    }
+
+
+    private void forceLog(LoggEvent loggEvent) {
+        callAppenders(loggEvent);
+    }
+
+    private void callAppenders(LoggEvent loggEvent) {
+        for (Category c=this; c != null; c = c.parent) {
+            c.aai.appendLoopOnAppenders(loggEvent);
+        }
     }
 }

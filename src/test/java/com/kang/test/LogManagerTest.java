@@ -1,5 +1,6 @@
 package com.kang.test;
 
+import com.kang.log4j.core.Logger;
 import com.kang.manager.LogManager;
 import org.junit.Test;
 
@@ -14,5 +15,8 @@ public class LogManagerTest {
     public  void testLogManagerInit() {
 
         LogManager manager = new LogManager();
+        Logger logger = manager.getLogger("root");
+
+        logger.info("hello logger");
     }
 }

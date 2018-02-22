@@ -1,5 +1,7 @@
 package com.kang.appender;
 
+import com.kang.log4j.core.LoggEvent;
+
 /**
  * @Author：zeqi
  * @Date: Created in 21:41 9/1/18.
@@ -16,4 +18,6 @@ public interface AppenderAttachable {
      */
     public
     Appender getAppender(String name);
+
+    void appendLoopOnAppenders(LoggEvent loggEvent);
 }

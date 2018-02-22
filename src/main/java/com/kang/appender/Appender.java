@@ -2,6 +2,7 @@ package com.kang.appender;
 
 import com.kang.filters.Filter;
 import com.kang.log4j.core.Layout;
+import com.kang.log4j.core.LoggEvent;
 
 /**
  * @Author：zeqi
@@ -12,7 +13,9 @@ public interface Appender {
 
      void addFilter(Filter filter);
 
-     void append(String message);
+     void append(LoggEvent messageEvent);
 
      void setLayout(Layout layout);
+
+     void activeOptions();
 }
